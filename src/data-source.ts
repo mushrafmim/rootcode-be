@@ -7,7 +7,7 @@ dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  url: process.env.QUIZBANK_DB_URI,
+  url: process.env.INTERGALACTIC_DB_URI,
   synchronize: true,
   logging: false,
   entities: [User],

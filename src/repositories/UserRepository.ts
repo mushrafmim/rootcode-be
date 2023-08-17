@@ -13,7 +13,7 @@ export class UserRepository {
         return await this.userRepository.find();
     }
 
-    public async getUserById(id: string): Promise<User> {
+    public async getUserById(id: number): Promise<User> {
         return await this.userRepository.findOne({
             where: {
                 id

@@ -22,12 +22,6 @@ export class AuthService {
             throw new Error('User already exists');
         }
 
-        // const isUsernameExists = await this.userRepository.getUserByUsername(username);
-
-        // if (isUsernameExists) {
-        //     throw new Error('Username already exists');
-        // }
-
         const hashedPassword = await hashPassword(password);
         const user = new User(firstname, lastname, email, hashedPassword);
         await this.userRepository.createUser(user);
@@ -35,7 +29,7 @@ export class AuthService {
 
     public async login(email: string, password: string): Promise<string> {
         const user = await this.userRepository.getUserByEmail(email);
-        console.log(user)
+        
         if (!user) {
             throw new Error('User not found');
         }
