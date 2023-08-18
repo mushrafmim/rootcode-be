@@ -16,7 +16,7 @@ export class TripViewRepository {
                 fromRegion: from,
                 toRegion: to,
                 departureTime: MoreThan(departureTime),
-                spaceCraftTravelMode: travelMode === 'undefined' ? MoreThan('') : travelMode
+                spaceCraftTravelMode: travelMode === 'undefined' ? null : travelMode
             }
         });
     }
