@@ -8,7 +8,10 @@ export class SpaceCraft {
     id: number;
 
     @Column()
-    type: string;
+    model: string;
+
+    @Column()
+    travelMode: string;
 
     @OneToMany(() => SpaceCraftSection, (spaceCraft) => spaceCraft.spacecraft)
     sections: SpaceCraftSection[];

@@ -12,6 +12,9 @@ export class Trip {
     @Column()
     departureTime: Date;
 
+    @Column()
+    basePrice: number;
+
     @ManyToOne(() => SpaceCraft, (spaceCraft) => spaceCraft.trips)
     spaceCraft: SpaceCraft;
 

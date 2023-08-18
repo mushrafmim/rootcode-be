@@ -8,9 +8,6 @@ export class SpaceCraftSection {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    type: string;
-
     @Column({
         type: "enum",
         enum: SectionType
@@ -21,7 +18,7 @@ export class SpaceCraftSection {
     numberOfPeople: number;
 
     @Column()
-    price: number;
+    price_factor: number;
 
     @ManyToOne(() => SpaceCraft, section => section.sections)
     spacecraft: SpaceCraft;
