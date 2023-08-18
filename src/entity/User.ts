@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Booking } from "./Booking";
 
 @Entity()
 export class User {
@@ -24,6 +25,9 @@ export class User {
     nullable: false
   })
   password: string;
+
+  @OneToMany(() => Booking, (booking) => booking.user)
+  bookings: Booking[];
 
   constructor(firstname: string, lastname: string, email: string, password: string) {
     this.firstname = firstname;

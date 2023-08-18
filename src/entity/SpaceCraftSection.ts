@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SectionType } from "../enums/SectionType";
 import { SpaceCraft } from "./SpaceCraft";
+import { Booking } from "./Booking";
 
 @Entity()
 export class SpaceCraftSection {
@@ -24,4 +25,7 @@ export class SpaceCraftSection {
 
     @ManyToOne(() => SpaceCraft, section => section.sections)
     spacecraft: SpaceCraft;
+
+    @OneToMany(() => Booking, (booking) => booking.spaceCraftSection)
+    bookings: Booking[];
 }

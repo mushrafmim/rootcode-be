@@ -1,9 +1,5 @@
-import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
-import { User } from "../entity/User";
 import { UserService } from "../services/UserService";
-
-// const userRepository = AppDataSource.getRepository(User);
 
 export class UserController {
 
