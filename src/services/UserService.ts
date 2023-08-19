@@ -15,8 +15,4 @@ export class UserService {
     public async getUserById(id: number): Promise<User | undefined> {
         return await this.userRepository.getUserById(id);
     }
-
-    public async getAllAttemptsByUser(user: User): Promise<User> {
-        return await this.userRepository.getAllAttempts(user)
-    }
 }

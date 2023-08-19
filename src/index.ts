@@ -2,11 +2,12 @@ import * as express from "express";
 import { AppDataSource } from "./data-source";
 import { AuthController } from "./auth/AuthController";
 import { authMiddleware } from "./auth/middlewares/AuthMiddleware";
-import tripRoutes from "./routes/trip.routes"
 const dotenv = require("dotenv");
 const cors = require("cors");
 
 // routers
+import tripRoutes from "./routes/trip.routes"
+import regionRoutes from "./routes/region.routes"
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ AppDataSource.initialize()
     const authController = new AuthController()
 
     app.use("/trips", tripRoutes);
+    app.use("/regions", regionRoutes)
 
 
     app.post("/login", authController.login);

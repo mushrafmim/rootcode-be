@@ -29,7 +29,7 @@ export class AuthService {
 
     public async login(email: string, password: string): Promise<string> {
         const user = await this.userRepository.getUserByEmail(email);
-        
+
         if (!user) {
             throw new Error('User not found');
         }

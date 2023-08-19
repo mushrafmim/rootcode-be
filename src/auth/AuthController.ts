@@ -27,6 +27,8 @@ export class AuthController {
             return
         } catch (error) {
 
+            console.log(error)
+
             if (error.message === 'Invalid password')
                 console.error('Error during user login:', error);
             res.status(500).json({ error: 'Failed to login' });
