@@ -17,8 +17,12 @@ export class SpaceCraftSection {
     @Column()
     numberOfPeople: number;
 
-    @Column()
-    price_factor: number;
+    @Column({
+        type: "decimal",
+        precision: 3,
+        scale: 2
+    })
+    priceFactor: number;
 
     @ManyToOne(() => SpaceCraft, section => section.sections)
     spacecraft: SpaceCraft;

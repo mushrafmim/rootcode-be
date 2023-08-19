@@ -28,4 +28,15 @@ export class TripController {
             response.status(500).send(error.message);
         }
     }
+
+    public getTripById = async (request: Request, response: Response): Promise<void> => {
+        try {
+            const id = Number(request.params.id);
+            response.json(await this.tripService.getTripById(id));
+            return
+        } catch (error) {
+            console.log(error)
+            response.status(500).send(error.message);
+        }
+    }
 }

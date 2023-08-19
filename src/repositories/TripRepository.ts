@@ -9,14 +9,18 @@ export class TripRepository {
         this.tripRepository = AppDataSource.getRepository(Trip);
     }
 
-    public async getTripsByFromAndTo(fromRegion: string, toRegion: string): Promise<Trip[]> {
-        return await this.tripRepository.find({
+    public getTripById = async (id: number): Promise<Trip> => {
+        return await this.tripRepository.findOne({
             where: {
-                fromRegion,
-                toRegion
+                id
+            },
+            relations: {
+                fromRegion: true,
+                toRegion: true,
+                spaceCraft: {
+                    sections: true,
+                }
             }
         });
     }
-
-
 }

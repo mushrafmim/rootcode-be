@@ -5,8 +5,6 @@ config();
 
 const secretKey = process.env.SECRET_KEY; // Replace with your own secret key
 
-console.log(secretKey)
-
 export const generateToken = (payload: JwtPayload): string => {
     const token = sign(payload, secretKey);
     return token;

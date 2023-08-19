@@ -8,6 +8,7 @@ const cors = require("cors");
 // routers
 import tripRoutes from "./routes/trip.routes"
 import regionRoutes from "./routes/region.routes"
+import bookingRoutes from "./routes/booking.routes"
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ AppDataSource.initialize()
 
     app.use("/trips", tripRoutes);
     app.use("/regions", regionRoutes)
+    app.use("/booking", bookingRoutes);
 
 
     app.post("/login", authController.login);
