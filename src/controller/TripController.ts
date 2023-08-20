@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TripService } from "../services/TripService";
+import { TripSearcObject } from "../interfaces/TripControllerObject";
 
 export class TripController {
     private tripService: TripService;
@@ -10,33 +11,42 @@ export class TripController {
 
     public searchByTrip = async (request: Request, response: Response): Promise<void> => {
         try {
-            const from = String(request.query.from);
-            const to = String(request.query.to);
-            const travelMode = String(request.query.travelMode);
 
-            let dateString = String(request.query.date);
-
-            if (dateString === "undefined") {
-                dateString = new Date().toISOString();
+            const tripSearchObject: TripSearcObject = {
+                fromRegion: String(request.query.from),
+                toRegion: String(request.query.to),
+                departureTime: (() => {
+                    const dateString = String(request.query.date);
+                    if (dateString === "undefined") {
+                        return new Date();
+                    }
+                    return new Date(dateString);
+                })()
             }
+            const travelMode = request.query.travelMode;
 
-            const date = new Date(dateString);
+            if (travelMode)
+                tripSearchObject.spaceCraftTravelMode = String(travelMode);
 
-            response.json(await this.tripService.getTrips(from, to, date, travelMode))
-            return
+            const availableTrips = await this.tripService.getTrips(tripSearchObject)
+
+            response.json({ success: true, data: availableTrips })
         } catch (error) {
-            response.status(500).send(error.message);
+            response.status(500).send({ success: false, message: error.message });
         }
+        return
     }
 
     public getTripById = async (request: Request, response: Response): Promise<void> => {
         try {
             const id = Number(request.params.id);
-            response.json(await this.tripService.getTripById(id));
+
+            const tripObj = await this.tripService.getTripById(id)
+            response.json({ success: true, data: tripObj });
             return
         } catch (error) {
             console.log(error)
-            response.status(500).send(error.message);
+            response.status(500).send({ success: false, message: error.message });
         }
     }
 }

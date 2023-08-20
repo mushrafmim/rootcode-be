@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import BookingService from "../services/BookingService";
-import { Booking } from "../entity/Booking";
 import BookingObject from "../interfaces/BookingControllerObject";
 import { SectionType } from "../enums/SectionType";
 
@@ -12,10 +11,15 @@ export default class BookingController {
     }
 
     public getBookingsByUserId = async (request: Request, response: Response) => {
+        try {
+            const userId = Number(request.userObj.id)
 
-        const userId = Number(request.userObj.id)
-
-        response.json(await this.bookingService.getBookingsByUserId(userId));
+            const bookings = await this.bookingService.getBookingsByUserId(userId)
+            response.json({ success: true, data: bookings });
+        } catch (error) {
+            response.status(500).send({ success: false, message: error.message });
+        }
+        return
     }
 
     public makeBooking = async (request: Request, response: Response) => {

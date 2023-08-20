@@ -1,3 +1,4 @@
+import { TripSearcObject } from "../interfaces/TripControllerObject";
 import { TripRepository } from "../repositories/TripRepository";
 import { TripViewRepository } from "../repositories/TripViewRepository";
 
@@ -10,8 +11,8 @@ export class TripService {
         this.tripRepository = new TripRepository();
     }
 
-    public async getTrips(from: string, to: string, departureTime: Date, travelMode?: string) {
-        return await this.tripViewRepository.getTrips(from, to, departureTime, travelMode);
+    public async getTrips(tripSearchObject: TripSearcObject) {
+        return await this.tripViewRepository.getTrips(tripSearchObject);
     }
 
     public async getTripById(id: number) {

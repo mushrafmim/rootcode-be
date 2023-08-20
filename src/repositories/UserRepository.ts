@@ -30,7 +30,6 @@ export class UserRepository {
     }
 
     public async createUser(user: User): Promise<User> {
-        console.log(user)
         return await this.userRepository.save(user);
     }
 

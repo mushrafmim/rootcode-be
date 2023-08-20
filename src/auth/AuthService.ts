@@ -2,6 +2,8 @@ import { UserRepository } from '../repositories/UserRepository'
 import { User } from '../entity/User';
 import { generateToken } from '../utils/tokenUtils';
 import { hashPassword, comparePassword } from '../utils/passwordUtils';
+import { UserAlreadyExistsError } from '../Exceptions/UserAlreadyExistsError';
+import { UserNotMatchError } from '../Exceptions/UserNotMatchError';
 
 export class AuthService {
     private userRepository: UserRepository;
@@ -18,12 +20,16 @@ export class AuthService {
     ): Promise<void> {
 
         const isUserExists = await this.userRepository.getUserByEmail(email);
+
         if (isUserExists) {
-            throw new Error('User already exists');
+            throw new UserAlreadyExistsError('User already exists');
         }
 
         const hashedPassword = await hashPassword(password);
+
         const user = new User(firstname, lastname, email, hashedPassword);
+
+
         await this.userRepository.createUser(user);
     }
 
@@ -31,14 +37,13 @@ export class AuthService {
         const user = await this.userRepository.getUserByEmail(email);
 
         if (!user) {
-            throw new Error('User not found');
+            throw new UserNotMatchError('Invalid email or password');
         }
-
 
         const passwordMatch = await comparePassword(password, user.password);
 
         if (!passwordMatch) {
-            throw new Error('Invalid password');
+            throw new UserNotMatchError('Invalid email or password');
         }
 
         const token = generateToken({ id: user.id, username: user.email });

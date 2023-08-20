@@ -1,6 +1,7 @@
 import { MoreThan, Repository } from "typeorm";
 import { TripView } from "../entity/TripView";
 import { AppDataSource } from "../data-source";
+import { TripSearcObject } from "../interfaces/TripControllerObject";
 
 export class TripViewRepository {
     private tripViewRepository: Repository<TripView>;
@@ -9,14 +10,12 @@ export class TripViewRepository {
         this.tripViewRepository = AppDataSource.getRepository(TripView);
     }
 
-    public async getTrips(from: string, to: string, departureTime: Date, travelMode?: string): Promise<TripView[]> {
+    public async getTrips(tripSearchObject: TripSearcObject): Promise<TripView[]> {
 
         return await this.tripViewRepository.find({
             where: {
-                fromRegion: from,
-                toRegion: to,
-                departureTime: MoreThan(departureTime),
-                spaceCraftTravelMode: travelMode === 'undefined' ? null : travelMode
+                ...tripSearchObject,
+                departureTime: MoreThan(tripSearchObject.departureTime)
             }
         });
     }
