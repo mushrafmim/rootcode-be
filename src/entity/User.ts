@@ -7,7 +7,7 @@ export class User {
   id: number;
 
   @Column({
-    nullable: false
+    nullable: true
   })
   firstname: string;
 
